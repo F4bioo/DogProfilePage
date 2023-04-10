@@ -32,3 +32,13 @@ jobs:
 
       - name: Run unit tests
         run: ./gradlew test
+
+  automerge:
+    needs: lint_and_tests
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: automerge
+        uses: pascalgn/automerge-action@v0.14.3
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
